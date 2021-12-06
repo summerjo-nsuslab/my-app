@@ -1,0 +1,43 @@
+:host{
+    li {
+        display: flex;
+        justify-content: space-between;
+
+        & + li {
+            margin-top: .7em;
+        }
+
+        input {
+            &[type="checkbox"] {
+                width: 1.5rem;
+                height: 1.5rem;
+            }
+
+            &[type="text"] {
+                width: 78%;
+                border: none;
+            }
+        }
+
+        button {
+            padding: 0 .8rem;
+            border: 1px solid #000;
+
+            &.btnDelete {
+                color: #c50000;
+                border-color: #c50000;
+            }
+        }
+
+        p {
+            width: 78%;
+            font-size: .9em;
+            line-height: 1.5rem;
+        }
+
+        .completed {
+            color: #aaa;
+            text-decoration: line-through;
+        }
+    }
+}

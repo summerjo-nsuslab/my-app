@@ -1,0 +1,4 @@
+<form [formGroup]="inputForm" (ngSubmit)="onSubmit()">
+    <input type="text" formControlName="item">
+    <button type="submit" [disabled]="!inputForm.valid">등록</button>
+</form>

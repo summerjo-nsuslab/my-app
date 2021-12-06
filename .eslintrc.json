@@ -1,0 +1,133 @@
+{
+    "root": true,
+    "overrides": [
+        {
+            "files": [
+                "*.ts"
+            ],
+            "env": {
+                "jasmine": true
+            },
+            "parserOptions": {
+                "project": [
+                    "tsconfig.json"
+                ],
+                "createDefaultProgram": true
+            },
+            "extends": [
+                "airbnb-base",
+                "plugin:@angular-eslint/recommended",
+                "plugin:@angular-eslint/template/process-inline-templates"
+            ],
+            "rules": {
+                "@angular-eslint/directive-selector": [
+                    "error",
+                    {
+                        "type": "attribute",
+                        "prefix": "app",
+                        "style": "camelCase"
+                    }
+                ],
+                "@angular-eslint/component-selector": [
+                    "error",
+                    {
+                        "type": "element",
+                        "prefix": "app",
+                        "style": "kebab-case"
+                    }
+                ],
+                "indent": "off",
+                "@angular-eslint/directive-selector": "off",
+                "@typescript-eslint/indent": [
+                    "error",
+                    4
+                ],
+                "@typescript-eslint/explicit-member-accessibility": "error",
+                "arrow-parens": "off",
+                "import/no-unresolved": "off",
+                "import/prefer-default-export": "off",
+                "import/extensions": "off",
+                "object-curly-spacing": "error",
+                "object-curly-newline": "off",
+                "class-methods-use-this": 0,
+                "comma-dangle": [
+                    "error",
+                    "never"
+                ],
+                "function-paren-newline": "error",
+                "lines-between-class-members": [
+                    "error",
+                    "always",
+                    {
+                        "exceptAfterSingleLine": true
+                    }
+                ],
+                "max-len": [
+                    "error",
+                    250
+                ],
+                "no-console": "off",
+                "no-empty-function": "off",
+                "no-plusplus": [
+                    "error",
+                    {
+                        "allowForLoopAfterthoughts": true
+                    }
+                ],
+                "no-unused-vars": "off",
+                "no-useless-constructor": "off",
+                "no-param-reassign": "off",
+                "no-shadow": "off",
+                "no-useless-escape": "off",
+                "no-use-before-define": [
+                    "error",
+                    {
+                        "variables": true,
+                        "functions": false,
+                        "classes": false
+                    }
+                ],
+                "space-before-blocks": "error",
+                "space-before-function-paren": "error",
+                "comma-style": "error",
+                "dot-notation": "off",
+                "no-void": "off",
+                "semi": "error",
+                "quotes": [
+                    "error",
+                    "single",
+                    {
+                        "allowTemplateLiterals": true
+                    }
+                ],
+                "yoda": [
+                    "error",
+                    "always",
+                    {
+                        "onlyEquality": true
+                    }
+                ],
+                "prefer-destructuring": [
+                    "error",
+                    {
+                        "object": false,
+                        "array": false
+                    }
+                ],
+                "no-continue": "off",
+                "no-underscore-dangle": "off",
+                "no-extra-boolean-cast": "off",
+                "arrow-body-style": "off"
+            }
+        },
+        {
+            "files": [
+                "*.html"
+            ],
+            "extends": [
+                "plugin:@angular-eslint/template/recommended"
+            ],
+            "rules": {}
+        }
+    ]
+}

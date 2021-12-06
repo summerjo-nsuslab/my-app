@@ -1,0 +1,14 @@
+<ul id="todoList">
+    <li *ngFor="let item of todoList" #itemElement data-editable="false">
+        <input type="checkbox" [checked]="item.completed" (click)="completed(item)">
+        <ng-container *ngIf="itemElement.getAttribute('data-editable') === 'false'; else normalList">
+            <p [class.completed]="item.completed">{{ item.title }}</p>
+            <button type="button" (click)="edit(itemElement)">수정</button>
+        </ng-container>
+        <ng-template #normalList>
+            <input type="text" #itemTitle [class.completed]="item.completed" [value]="item.title" autofocus>
+            <button type="button" (click)="save(itemElement, item, itemTitle)">저장</button>
+        </ng-template>
+        <button type="button" class="btnDelete" (click)="delete(item)">삭제</button>
+    </li>
+</ul>
