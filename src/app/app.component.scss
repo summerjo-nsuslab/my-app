@@ -1,7 +1,28 @@
 :host {
     display: block;
-    max-width: 800px;
-    padding: 3em 4em;
-    margin: 1em auto;
-    background-color: #ececec;
+    //max-width: 800px;
+    //padding: 3em 4em;
+    //margin: 1em auto;
+    //background-color: #ececec;
+
+    header {
+        border-bottom: 1px solid #000;
+        nav {
+            max-width: 1024px;
+            margin: 0 auto;
+            ul {
+                display: flex;
+                li {
+                    a {
+                        padding: 1.5em 1em;
+
+                        &.active {
+                            text-decoration: underline;
+                            text-underline-offset: .2em;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

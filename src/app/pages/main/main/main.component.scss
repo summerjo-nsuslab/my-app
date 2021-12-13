@@ -1,0 +1,16 @@
+:host {
+    ul {
+        width: 400px;
+        margin: 0 auto;
+        li {
+            & + li {
+                margin-top: 1rem;
+            }
+
+            a {
+                padding: 2em;
+                border: 1px solid #000;
+            }
+        }
+    }
+}

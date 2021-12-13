@@ -1,4 +1,5 @@
 * {
+    color: #000;
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
     padding: 0;
@@ -6,13 +7,38 @@
     vertical-align: top;
 }
 
-h1 {
-    font-size: 2.5em;
-    text-align: center;
+body {
+    background-color: #ececec;
 }
 
 form {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
     width: 100%;
+    margin: 2.5em 0;
+
+    input {
+        border: 1px solid #000;
+        width: 89%;
+    }
+
+    button {
+        border: 1px solid #000;
+        width: 10%;
+
+        &[disabled] {
+            opacity: .3;
+            cursor: default;
+        }
+    }
+
+    .error {
+        position: absolute;
+        bottom: -1.8em;
+        font-size: .8rem;
+        color: #c50000;
+    }
 }
 
 input {
@@ -30,8 +56,82 @@ button {
     font-size: .9em;
     background-color: transparent;
     cursor: pointer;
+
+    &[disabled] {
+        cursor: default;
+    }
 }
 
 ul {
     list-style: none;
+}
+
+a {
+    display: block;
+    //width: 100%;
+    text-decoration: none;
+}
+
+.font {
+    &-large {
+        font-size: 2.5em;
+    }
+
+    &-middle {
+        font-size: 1.5em;
+    }
+
+    &-small {
+
+    }
+}
+
+.inner {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 3rem 1rem;
+}
+
+.card {
+    position: relative;
+    width: 23.6rem;
+    margin-bottom: .8rem;
+    border: 1px solid #000;
+    border-radius: 25px;
+    overflow: hidden;
+
+    .temp {
+        font-size: 3rem;
+    }
+    .city {
+        color: #666;
+        margin-top: 1rem;
+    }
+}
+.weatherIcon {
+    background: url('~src/assets/weather/images/mist.png') no-repeat;
+}
+
+.Clear {
+    background-image: url('~src/assets/weather/images/sun.png');
+}
+
+.Clouds {
+    background-image: url('~src/assets/weather/images/cloudy.png');
+}
+
+.Snow,Drizzle {
+    background-image: url('~src/assets/weather/images/snowy.png');
+}
+
+.Thunderstorm {
+    background-image: url('~src/assets/weather/images/thunderstorm.png');
+}
+
+.Mist, .Smoke, .Haze, .Dust, .Fog, .Sand, .Dust, .Ash, .Squall, .Tornado {
+    background-image: url('~src/assets/weather/images/mist.png');
+}
+
+.Rain {
+    background-image: url('~src/assets/weather/images/rainy.png');
 }

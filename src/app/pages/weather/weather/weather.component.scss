@@ -1,0 +1,48 @@
+:host {
+    h1 {
+        text-align: center;
+    }
+
+    .card-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin: 0 auto;
+        .card {
+            width: 49.2%;
+
+            a {
+                padding: 3rem 2rem;
+                background-repeat: no-repeat;
+                background-position: 90% 50%;
+                background-size: 120px;
+
+                span {
+                    display: block;
+                }
+
+                .btnDelete {
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    height: auto;
+                    color: #fff;
+                    padding: 1rem 1.25rem;
+                    background-color: rgba(0, 0, 0, .5);
+                    border: none;
+                    border-radius: 0 0 0 15px;
+                    opacity: 0;
+                }
+
+                &:hover {
+                    background-color: white;
+
+                    .btnDelete {
+                        opacity: 1;
+                    }
+                }
+            }
+        }
+    }
+
+}

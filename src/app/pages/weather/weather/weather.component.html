@@ -1,0 +1,19 @@
+<div class="inner">
+    <h1 class="font-large">WEATHER FORECAST</h1>
+    <div>
+        <form [formGroup]="inputForm" (ngSubmit)="onSubmit(city.value)">
+            <input type="text" #city formControlName="city">
+            <button type="submit" [disabled]="!inputForm.valid">추가</button>
+            <p class="error" *ngIf="!isValid">도시 이름을 다시 확인해주세요.</p>
+        </form>
+    </div>
+    <ul class="card-list">
+        <li class="card" *ngFor="let city of cities">
+            <a routerLink="detail/{{ city.city }}" [ngClass]="city.weather">
+                <span class="temp">{{ city.temp }}°C</span>
+                <span class="city">{{ city.city }}</span>
+                <button class="btnDelete" (click)="delete(city, $event)">X</button>
+            </a>
+        </li>
+    </ul>
+</div>
