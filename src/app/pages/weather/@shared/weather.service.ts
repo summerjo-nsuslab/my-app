@@ -66,7 +66,8 @@ export class WeatherService {
                 switchMap((geo) => {
                     const geoURL = `lat=${geo.lat}&lon=${geo.lon}&exclude=minutely`;
                     return this.http.get(this.oneCallWeatherURL + geoURL + this.urlSuffix);
-                })
+                }),
+                catchError(this.handleError)
             );
     }
 

@@ -54,7 +54,6 @@ export class WeatherDetailComponent implements OnInit {
                 arr.push({ time: this.getDate(data.dt).hour, temp: Math.round(data.temp), weather: data.weather[0].main });
             }
         });
-
         return arr;
     }
 
@@ -67,11 +66,10 @@ export class WeatherDetailComponent implements OnInit {
     }
 
     private getDate(time: number) {
-        const week = ['일', '월', '화', '수', '목', '금', '토', '일'];
+        const week = ['일', '월', '화', '수', '목', '금', '토'];
         const convert = new Date(time * 1e3);
         const hour = convert.getHours();
-        const date = convert.getDate();
         const day = week[convert.getDay()];
-        return { hour, date, day };
+        return { hour, day };
     }
 }
