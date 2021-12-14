@@ -48,7 +48,8 @@ export class WeatherDetailComponent implements OnInit {
         const today = new Date();
         const tomorrow = new Date(today.setDate(today.getDate() + 1));
         tomorrow.setHours(-1);
-        const tomorrowTimestamp = tomorrow.getTime() / 1000.0;
+        const tomorrowTimestamp = tomorrow.getTime() / 1e3;
+        // filter 사용하기
         data.forEach((data: any) => {
             if (data.dt < tomorrowTimestamp) {
                 arr.push({ time: this.getDate(data.dt).hour, temp: Math.round(data.temp), weather: data.weather[0].main });

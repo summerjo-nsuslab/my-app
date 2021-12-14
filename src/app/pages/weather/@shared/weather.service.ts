@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 
 import { Observable, switchMap, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
@@ -10,10 +10,12 @@ import { City } from './interface';
 })
 export class WeatherService {
     private citiesURL: string = 'api/cities';
-    private baseWeatherURL: string = 'http://api.openweathermap.org/data/2.5/weather?q=';
     private geocodingURL: string = 'http://api.openweathermap.org/geo/1.0/direct?q=';
-    private urlSuffix: string = '&units=metric&lang=kr&appid=4b2f58c0c5767970971510a29ca9f63d';
+    private urlSuffix: string = '&units=metric&lang=kr&appid=1e59095ffeb0f870b4f162cba625931d';
     private oneCallWeatherURL: string = 'https://api.openweathermap.org/data/2.5/onecall?';
+    private httpOptions = {
+        headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
 
     public constructor(
         private http: HttpClient
@@ -42,7 +44,8 @@ export class WeatherService {
         return this.getWeather$(city)
             .pipe(
                 switchMap(value => {
-                    const newCity: City = { city: value.name, temp: value.main.temp, weather: value.weather[0].main };
+                    const convertCity = city[0].toUpperCase() + city.slice(1);
+                    const newCity: City = { city: convertCity, temp: value.current.temp, weather: value.current.weather[0].main };
                     return this.http.post(this.citiesURL, newCity);
                 }),
                 catchError(this.handleError)
@@ -51,7 +54,7 @@ export class WeatherService {
 
     public deleteCity$(id: number): Observable<any> {
         const url = `${this.citiesURL}/${id}`;
-        return this.http.delete<City>(url).pipe(
+        return this.http.delete<City>(url, this.httpOptions).pipe(
             catchError(this.handleError)
         );
     }
@@ -60,8 +63,7 @@ export class WeatherService {
         return this.http.get(this.geocodingURL + city + this.urlSuffix)
             .pipe(
                 map((value: any) => {
-                    const geo = value[0];
-                    return geo;
+                    return value[0];
                 }),
                 switchMap((geo) => {
                     const geoURL = `lat=${geo.lat}&lon=${geo.lon}&exclude=minutely`;

@@ -12,15 +12,11 @@ export class InMemoryDataService implements InMemoryDbService {
 
     public createDb() {
         const cities: City[] = [
-            { id: 1, city: 'Seoul' },
-            { id: 2, city: 'Santiago' },
-            { id: 3, city: 'London' },
-            { id: 4, city: 'Berlin' }
+            // { id: 1, city: 'Seoul' },
+            // { id: 2, city: 'Santiago' },
+            // { id: 3, city: 'London' },
+            { id: 1, city: 'Berlin' }
         ];
         return { cities };
-    }
-
-    public genId(cities: City[]):number {
-        return cities.length + 1;
     }
 }

@@ -8,7 +8,8 @@ import { City } from '../@shared/interface';
 @Component({
     selector: 'app-weather',
     templateUrl: './weather.component.html',
-    styleUrls: ['./weather.component.scss']
+    styleUrls: ['./weather.component.scss'],
+    providers: [WeatherInputStateService]
 })
 export class WeatherComponent implements OnInit {
     public inputForm: FormGroup;
@@ -35,8 +36,8 @@ export class WeatherComponent implements OnInit {
     }
 
     public delete(city: City, $event: any): void {
+        this.weatherService.deleteCity$(city.id).subscribe();
         this.cities = this.cities.filter(c => c !== city);
-        this.weatherService.deleteCity$(city.id);
         $event.preventDefault();
     }
 
