@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 
-import { Observable, switchMap, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
-import { City } from './interface';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { GeographicDTO, Weather, WeatherDTO } from './interface';
 
 @Injectable({
     providedIn: 'any'
@@ -21,64 +21,68 @@ export class WeatherService {
         private http: HttpClient
     ) { }
 
-    public getCities$(): Observable<City[]> {
-        return this.http.get<City[]>(this.citiesURL)
-            .pipe(
-                map((result) => {
-                    result.forEach(
-                        city => {
-                            this.getWeather$(city.city)
-                                .subscribe(value => {
-                                    city.temp = value.current.temp;
-                                    city.weather = value.current.weather[0].main;
-                                });
-                        }
-                    );
-                    return result;
-                }),
-                catchError(this.handleError)
-            );
+    public getCities$(): Observable<Weather[]> {
+        return this.http.get<Weather[]>(this.citiesURL);
     }
 
-    public addCity$(city: string): Observable<any> {
-        return this.getWeather$(city)
-            .pipe(
-                switchMap(value => {
-                    const convertCity = city[0].toUpperCase() + city.slice(1);
-                    const newCity: City = { city: convertCity, temp: value.current.temp, weather: value.current.weather[0].main };
-                    return this.http.post(this.citiesURL, newCity);
-                }),
-                catchError(this.handleError)
-            );
+    public getGeographic$(city: string): Observable<GeographicDTO[]> {
+        return this.http.get<GeographicDTO[]>(this.geocodingURL + city + this.urlSuffix);
+    }
+
+    public async getWeather$(geo: any): Promise<Weather> {
+        const geoURL = `lat=${geo[0].lat}&lon=${geo[0].lon}&exclude=minutely`;
+        const getWeather = await this.http.get<WeatherDTO>(this.oneCallWeatherURL + geoURL + this.urlSuffix).toPromise();
+        return {
+            city: geo[0].name,
+            temp: getWeather.current.temp,
+            weather: getWeather.current.weather[0].main,
+            minTemp: getWeather.daily[0].temp.min,
+            maxTemp: getWeather.daily[0].temp.max,
+            hourly: this.getHourly(getWeather.hourly),
+            daily: this.getDaily(getWeather.daily)
+        };
+    }
+
+    public addCity$(newCity: Weather): Observable<any> {
+        return this.http.post<Weather>(this.citiesURL, newCity);
     }
 
     public deleteCity$(id: number): Observable<any> {
         const url = `${this.citiesURL}/${id}`;
-        return this.http.delete<City>(url, this.httpOptions).pipe(
-            catchError(this.handleError)
-        );
+        return this.http.delete<Weather>(url, this.httpOptions);
     }
 
-    public getWeather$(city : string): Observable<any> {
-        return this.http.get(this.geocodingURL + city + this.urlSuffix)
-            .pipe(
-                map((value: any) => {
-                    return value[0];
-                }),
-                switchMap((geo) => {
-                    const geoURL = `lat=${geo.lat}&lon=${geo.lon}&exclude=minutely`;
-                    return this.http.get(this.oneCallWeatherURL + geoURL + this.urlSuffix);
-                }),
-                catchError(this.handleError)
-            );
+    private getHourly(data: any) {
+        const arr: Weather['hourly'] = [];
+        const tomorrow = this.getDate().tomorrow;
+        tomorrow.setHours(-1);
+        const tomorrowTimestamp = tomorrow.getTime() / 1e3;
+        data = data.filter((d: any) => d.dt < tomorrowTimestamp);
+        data.forEach((data: any) => {
+            arr.push({
+                time: this.getDate(data.dt).hour,
+                temp: Math.round(data.temp),
+                weather: data.weather[0].main
+            });
+        });
+        return arr;
     }
 
-    private handleError(error: HttpErrorResponse) {
-        if (0 === error.status) {
-            console.error('Error:', error.error);
-        } else {
-            console.error(`Backend error ${error.status}`);
-        }
-        return throwError('예기치 못한 에러가 발생했습니다. 다시 시도해주세요.');
+    private getDaily(data: any) {
+        const arr: Weather['daily'] = [];
+        data.forEach((data: any) => {
+            arr.push({ day: this.getDate(data.dt).day, temp: Math.round(data.temp.day), weather: data.weather[0].main });
+        });
+        return arr;
+    }
+
+    private getDate(time?: number) {
+        const today = new Date();
+        const tomorrow = new Date(today.setDate(today.getDate() + 1));
+        const week = ['일', '월', '화', '수', '목', '금', '토'];
+        const convert = new Date(time * 1e3);
+        const hour = convert.getHours();
+        const day = week[convert.getDay()];
+        return { hour, day, tomorrow };
     }
 }

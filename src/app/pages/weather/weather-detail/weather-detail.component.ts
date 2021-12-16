@@ -27,50 +27,9 @@ export class WeatherDetailComponent implements OnInit {
         this.location.back();
     }
 
-    private getWeather(): void {
+    private async getWeather(): Promise<any> {
         const city = this.route.snapshot.paramMap.get('city');
-        this.weatherService.getWeather$(city)
-            .subscribe(value => {
-                this.weatherInfo = {
-                    city,
-                    temp: value.current.temp,
-                    weather: value.current.weather[0].main,
-                    minTemp: value.daily[0].temp.min,
-                    maxTemp: value.daily[0].temp.max,
-                    hourly: this.getHourly(value.hourly),
-                    daily: this.getDaily(value.daily)
-                };
-            });
-    }
-
-    private getHourly(data: any) {
-        const arr: Weather['hourly'] = [];
-        const today = new Date();
-        const tomorrow = new Date(today.setDate(today.getDate() + 1));
-        tomorrow.setHours(-1);
-        const tomorrowTimestamp = tomorrow.getTime() / 1e3;
-        // filter 사용하기
-        data.forEach((data: any) => {
-            if (data.dt < tomorrowTimestamp) {
-                arr.push({ time: this.getDate(data.dt).hour, temp: Math.round(data.temp), weather: data.weather[0].main });
-            }
-        });
-        return arr;
-    }
-
-    private getDaily(data: any) {
-        const arr: Weather['daily'] = [];
-        data.forEach((data: any) => {
-            arr.push({ day: this.getDate(data.dt).day, temp: Math.round(data.temp.day), weather: data.weather[0].main });
-        });
-        return arr;
-    }
-
-    private getDate(time: number) {
-        const week = ['일', '월', '화', '수', '목', '금', '토'];
-        const convert = new Date(time * 1e3);
-        const hour = convert.getHours();
-        const day = week[convert.getDay()];
-        return { hour, day };
+        const geo = await this.weatherService.getGeographic$(city).toPromise();
+        this.weatherInfo = await this.weatherService.getWeather$(geo);
     }
 }
