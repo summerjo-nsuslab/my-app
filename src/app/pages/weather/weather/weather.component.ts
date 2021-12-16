@@ -15,6 +15,7 @@ export class WeatherComponent implements OnInit {
     public inputForm: FormGroup;
     public cities?: Weather[];
     public isValid: boolean = true;
+    public isRedundant: boolean = true;
 
     public constructor(
         private weatherService: WeatherService,
@@ -51,7 +52,11 @@ export class WeatherComponent implements OnInit {
             return;
         }
         city = city[0].toUpperCase() + city.slice(1);
-
+        const index = this.cities.findIndex(i => i.city === city);
+        if (index >= 0) {
+            this.isRedundant = false;
+            return;
+        }
         const geo = await this.weatherService.getGeographic$(city).toPromise();
         const newCity = await this.weatherService.getWeather$(geo);
         await this.weatherService.addCity$(newCity).toPromise();
