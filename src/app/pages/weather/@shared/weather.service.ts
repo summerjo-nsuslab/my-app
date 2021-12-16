@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import * as moment from 'moment';
+
 import { GeographicDTO, Weather, WeatherDTO } from './interface';
 
 @Injectable({
@@ -29,7 +30,7 @@ export class WeatherService {
         return this.http.get<GeographicDTO[]>(this.geocodingURL + city + this.urlSuffix);
     }
 
-    public async getWeather$(geo: any): Promise<Weather> {
+    public async getWeather$(geo: GeographicDTO[]): Promise<Weather> {
         const geoURL = `lat=${geo[0].lat}&lon=${geo[0].lon}&exclude=minutely`;
         const getWeather = await this.http.get<WeatherDTO>(this.oneCallWeatherURL + geoURL + this.urlSuffix).toPromise();
         return {
@@ -43,22 +44,21 @@ export class WeatherService {
         };
     }
 
-    public addCity$(newCity: Weather): Observable<any> {
+    public addCity$(newCity: Weather): Observable<Weather> {
         return this.http.post<Weather>(this.citiesURL, newCity);
     }
 
-    public deleteCity$(id: number): Observable<any> {
+    public deleteCity$(id: number): Observable<Weather> {
         const url = `${this.citiesURL}/${id}`;
         return this.http.delete<Weather>(url, this.httpOptions);
     }
 
-    private getHourly(data: any) {
+    private getHourly(data: WeatherDTO['hourly']) {
         const arr: Weather['hourly'] = [];
-        const tomorrow = this.getDate().tomorrow;
-        tomorrow.setHours(-1);
-        const tomorrowTimestamp = tomorrow.getTime() / 1e3;
-        data = data.filter((d: any) => d.dt < tomorrowTimestamp);
-        data.forEach((data: any) => {
+        const today = moment().endOf('day');
+        const timestamp = Number(today.format('x')) / 1e3;
+        data = data.filter(d => d.dt < timestamp);
+        data.forEach(data => {
             arr.push({
                 time: this.getDate(data.dt).hour,
                 temp: Math.round(data.temp),
@@ -68,21 +68,19 @@ export class WeatherService {
         return arr;
     }
 
-    private getDaily(data: any) {
+    private getDaily(data: WeatherDTO['daily']) {
         const arr: Weather['daily'] = [];
-        data.forEach((data: any) => {
+        data.forEach(data => {
             arr.push({ day: this.getDate(data.dt).day, temp: Math.round(data.temp.day), weather: data.weather[0].main });
         });
         return arr;
     }
 
-    private getDate(time?: number) {
-        const today = new Date();
-        const tomorrow = new Date(today.setDate(today.getDate() + 1));
+    private getDate(time: number) {
+        const today = moment(time * 1e3);
         const week = ['일', '월', '화', '수', '목', '금', '토'];
-        const convert = new Date(time * 1e3);
-        const hour = convert.getHours();
-        const day = week[convert.getDay()];
-        return { hour, day, tomorrow };
+        const hour = today.hour();
+        const day = week[today.day()];
+        return { hour, day };
     }
 }
