@@ -23,29 +23,29 @@ export class WeatherComponent implements OnInit {
     ) { }
 
     public ngOnInit(): void {
-        this.getList();
+        this.getList().then();
         this.inputForm = this.inputState.initForm();
     }
 
-    public async getList(): Promise<any> {
+    public async getList(): Promise<void> {
         this.cities = await this.weatherService.getCities$().toPromise();
         const promises = this.cities.map(async (n: Weather) => {
             const geo = await this.weatherService.getGeographic$(n.city).toPromise();
             return this.weatherService.getWeather$(geo);
         });
 
-        Promise.all(promises).then((result: any) => {
+        Promise.all(promises).then((result: Weather[]) => {
             this.cities = result;
         });
     }
 
-    public delete(city: Weather, $event: any): void {
+    public delete(city: Weather, $event: MouseEvent): void {
         this.weatherService.deleteCity$(city.id).subscribe();
         this.cities = this.cities.filter(c => c !== city);
         $event.preventDefault();
     }
 
-    public async onSubmit(city: string): Promise<any> {
+    public async onSubmit(city: string): Promise<void> {
         city = city.trim();
         if (!(city)) {
             this.isValid = false;

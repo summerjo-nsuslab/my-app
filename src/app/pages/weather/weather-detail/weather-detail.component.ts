@@ -20,14 +20,14 @@ export class WeatherDetailComponent implements OnInit {
     ) { }
 
     public ngOnInit(): void {
-        this.getWeather();
+        this.getWeather().then();
     }
 
     public goBack(): void {
         this.location.back();
     }
 
-    private async getWeather(): Promise<any> {
+    private async getWeather(): Promise<void> {
         const city = this.route.snapshot.paramMap.get('city');
         const geo = await this.weatherService.getGeographic$(city).toPromise();
         this.weatherInfo = await this.weatherService.getWeather$(geo);
