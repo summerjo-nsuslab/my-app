@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Observable } from 'rxjs';
+import { lastValueFrom } from 'rxjs';
 import * as moment from 'moment';
 
 import { GeographicDTO, Weather, WeatherDTO } from './interface';
@@ -22,17 +22,17 @@ export class WeatherService {
         private http: HttpClient
     ) { }
 
-    public getCities$(): Observable<Weather[]> {
-        return this.http.get<Weather[]>(this.citiesURL);
+    public getCities(): Promise<Weather[]> {
+        return lastValueFrom(this.http.get<Weather[]>(this.citiesURL));
     }
 
-    public getGeographic$(city: string): Observable<GeographicDTO[]> {
-        return this.http.get<GeographicDTO[]>(this.geocodingURL + city + this.urlSuffix);
+    public getGeographic(city: string): Promise<GeographicDTO[]> {
+        return lastValueFrom(this.http.get<GeographicDTO[]>(this.geocodingURL + city + this.urlSuffix));
     }
 
-    public async getWeather$(geo: GeographicDTO[]): Promise<Weather> {
+    public async getWeather(geo: GeographicDTO[]): Promise<Weather> {
         const geoURL = `lat=${geo[0].lat}&lon=${geo[0].lon}&exclude=minutely`;
-        const getWeather = await this.http.get<WeatherDTO>(this.oneCallWeatherURL + geoURL + this.urlSuffix).toPromise();
+        const getWeather = await lastValueFrom(this.http.get<WeatherDTO>(this.oneCallWeatherURL + geoURL + this.urlSuffix));
         return {
             city: geo[0].name,
             temp: getWeather.current.temp,
@@ -44,13 +44,13 @@ export class WeatherService {
         };
     }
 
-    public addCity$(newCity: Weather): Observable<Weather> {
-        return this.http.post<Weather>(this.citiesURL, newCity);
+    public addCity(newCity: Weather): Promise<Weather> {
+        return lastValueFrom(this.http.post<Weather>(this.citiesURL, newCity));
     }
 
-    public deleteCity$(id: number): Observable<Weather> {
+    public deleteCity(id: number): Promise<Weather> {
         const url = `${this.citiesURL}/${id}`;
-        return this.http.delete<Weather>(url, this.httpOptions);
+        return lastValueFrom(this.http.delete<Weather>(url, this.httpOptions));
     }
 
     private getHourly(data: WeatherDTO['hourly']) {

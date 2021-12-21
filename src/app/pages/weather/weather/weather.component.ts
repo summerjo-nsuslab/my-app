@@ -28,10 +28,10 @@ export class WeatherComponent implements OnInit {
     }
 
     public async getList(): Promise<void> {
-        this.cities = await this.weatherService.getCities$().toPromise();
+        this.cities = await this.weatherService.getCities();
         const promises = this.cities.map(async (n: Weather) => {
-            const geo = await this.weatherService.getGeographic$(n.city).toPromise();
-            return this.weatherService.getWeather$(geo);
+            const geo = await this.weatherService.getGeographic(n.city);
+            return this.weatherService.getWeather(geo);
         });
 
         Promise.all(promises).then((result: Weather[]) => {
@@ -39,8 +39,8 @@ export class WeatherComponent implements OnInit {
         });
     }
 
-    public delete(city: Weather, $event: MouseEvent): void {
-        this.weatherService.deleteCity$(city.id).subscribe();
+    public async delete(city: Weather, $event: MouseEvent): Promise<void> {
+        await this.weatherService.deleteCity(city.id);
         this.cities = this.cities.filter(c => c !== city);
         $event.preventDefault();
     }
@@ -57,9 +57,9 @@ export class WeatherComponent implements OnInit {
             this.isRedundant = false;
             return;
         }
-        const geo = await this.weatherService.getGeographic$(city).toPromise();
-        const newCity = await this.weatherService.getWeather$(geo);
-        await this.weatherService.addCity$(newCity).toPromise();
+        const geo = await this.weatherService.getGeographic(city);
+        const newCity = await this.weatherService.getWeather(geo);
+        await this.weatherService.addCity(newCity);
         this.cities.push(newCity);
     }
 }

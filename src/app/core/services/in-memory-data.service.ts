@@ -12,10 +12,8 @@ export class InMemoryDataService implements InMemoryDbService {
 
     public createDb() {
         const cities: Weather[] = [
-            // { id: 1, city: 'Seoul' },
-            { id: 2, city: 'Santiago' },
-            // { id: 3, city: 'London' },
-            { id: 1, city: 'Berlin' }
+            { id: 1, city: 'Santiago' },
+            { id: 2, city: 'Berlin' }
         ];
         return { cities };
     }

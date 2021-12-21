@@ -29,7 +29,7 @@ export class WeatherDetailComponent implements OnInit {
 
     private async getWeather(): Promise<void> {
         const city = this.route.snapshot.paramMap.get('city');
-        const geo = await this.weatherService.getGeographic$(city).toPromise();
-        this.weatherInfo = await this.weatherService.getWeather$(geo);
+        const geo = await this.weatherService.getGeographic(city);
+        this.weatherInfo = await this.weatherService.getWeather(geo);
     }
 }
