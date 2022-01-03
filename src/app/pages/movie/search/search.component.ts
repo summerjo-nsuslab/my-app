@@ -26,6 +26,6 @@ export class SearchComponent implements OnInit {
 
     public async onSubmit(query: string) {
         await this.router.navigate([`movie/search/${query}/page/1`]);
-        this.ChangeDetectorRef.markForCheck();
+        // this.ChangeDetectorRef.markForCheck();
     }
 }
