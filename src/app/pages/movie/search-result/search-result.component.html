@@ -1,22 +1,27 @@
-<ul class="movieList clearFix" *ngIf="searchResult">
-    <li *ngFor="let movie of searchResult.movie">
-        <a href="javascript: void(0)">
-            <div class="poster">
-                <img src="https://image.tmdb.org/t/p/original/{{ movie.poster }}"
-                     onError="javascript:this.src='assets/noImg.png'" alt="">
-                <div class="overview">
-                    <p class="summary">{{ movie.overview }}</p>
-                    <p class="rate">관람평 <span>{{ movie.vote }}</span></p>
+<ng-container *ngIf="searchResult.movie.length > 0; else noResult">
+    <ul class="movieList clearFix">
+        <li *ngFor="let movie of searchResult.movie">
+            <a href="javascript: void(0)">
+                <div class="poster">
+                    <img src="https://image.tmdb.org/t/p/original/{{ movie.poster }}"
+                         onError="javascript:this.src='assets/noImg.png'" alt="">
+                    <div class="overview">
+                        <p class="summary">{{ movie.overview }}</p>
+                        <p class="rate">관람평 <span>{{ movie.vote }}</span></p>
+                    </div>
                 </div>
-            </div>
-            <div class="movieInfo clearFix">
-                <p class="title">{{ movie.title }}</p>
-                <p class="genres"><span *ngFor="let genre of movie.genre">#{{ genre }} </span></p>
-                <span class="releaseDate">{{ movie.release_date }}</span>
-            </div>
-        </a>
-    </li>
-</ul>
+                <div class="movieInfo clearFix">
+                    <p class="title">{{ movie.title }}</p>
+                    <p class="genres"><span *ngFor="let genre of movie.genre">#{{ genre }} </span></p>
+                    <span class="releaseDate">{{ movie.release_date }}</span>
+                </div>
+            </a>
+        </li>
+    </ul>
+</ng-container>
+<ng-template #noResult>
+    <p class="resultText">검색 결과가 없습니다.</p>
+</ng-template>
 <div class="pagination" *ngIf="pages.length > 1">
     <ul>
         <ng-container *ngIf="activePage !== 1;">

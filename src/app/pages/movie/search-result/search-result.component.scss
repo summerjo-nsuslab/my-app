@@ -105,8 +105,12 @@
         }
     }
 
-    .pagination {
+    .resultText {
+        text-align: center;
         margin-top: 3rem;
+    }
+    .pagination {
+        margin-top: 5rem;
 
         ul {
             display: flex;

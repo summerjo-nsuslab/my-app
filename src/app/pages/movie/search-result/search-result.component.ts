@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { MovieService } from '../@shared/movie.service';
 import { MovieInfo } from '../@shared/interface';
-import { query } from '@angular/animations';
 
 @Component({
     selector: 'app-search-result',
@@ -33,11 +32,16 @@ export class SearchResultComponent implements OnInit {
     private async getResult() {
         const query: string = this.route.snapshot.paramMap.get('query');
         this.activePage = Number(this.route.snapshot.paramMap.get('page'));
-        this.searchResult = await this.movieService.searchMovie(query, this.activePage);
-        this.totalPage = this.searchResult.pages;
-        this.movieService.setTitle.next(`'${query}' 검색 결과`);
-        this.setPagination().then();
-        this.ChangeDetectorRef.markForCheck();
+        try {
+            this.searchResult = await this.movieService.searchMovie(query, this.activePage);
+            this.totalPage = this.searchResult.pages;
+            this.movieService.setTitle.next(`'${query}' 검색 결과`);
+            this.setPagination().then();
+        } catch (err) {
+            console.error(err);
+        } finally {
+            this.ChangeDetectorRef.markForCheck();
+        }
     }
 
     private async setPagination() {
