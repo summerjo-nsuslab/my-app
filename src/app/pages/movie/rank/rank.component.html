@@ -1,0 +1,17 @@
+<ul class="boxOffice">
+    <li *ngFor="let movie of boxOfficeList">
+        <span class="num">{{ movie.rank }}</span>
+        <span class="movieName">{{ movie.movieNm }}</span>
+        <ng-container *ngIf="movie.rankOldAndNew === 'NEW'; else isOld">
+            <span class="change new">NEW!</span>
+        </ng-container>
+        <ng-template #isOld>
+            <ng-container *ngIf="movie.rankInten === 0 ; else hasInten">
+                <span class="change">-</span>
+            </ng-container>
+            <ng-template #hasInten>
+                <span class="change" [ngClass]="movie.rankInten > 0 ? 'up' : 'down'">{{ Math.abs(movie.rankInten) }}</span>
+            </ng-template>
+        </ng-template>
+    </li>
+</ul>

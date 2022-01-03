@@ -1,0 +1,4 @@
+<form [formGroup]="inputForm" (ngSubmit)="onSubmit(query.value)">
+    <input type="text" #query formControlName="query">
+    <button type="submit" [disabled]="!inputForm.valid">검색</button>
+</form>
