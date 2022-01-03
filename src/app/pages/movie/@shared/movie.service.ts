@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { lastValueFrom } from 'rxjs';
+import { lastValueFrom, Subject } from 'rxjs';
 import * as moment from 'moment';
 
 import {
@@ -24,6 +24,8 @@ export class MovieService {
     public constructor(
         private http: HttpClient
     ) { }
+
+    public setTitle = new Subject<string>();
 
     public async getBoxOffice(): Promise<BoxOffice[]> {
         const arr: BoxOffice[] = [];

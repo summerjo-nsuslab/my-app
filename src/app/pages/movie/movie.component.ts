@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MovieService } from './@shared/movie.service';
 
 @Component({
     selector: 'app-movie',
@@ -7,20 +8,20 @@ import { ActivatedRoute, Router } from '@angular/router';
     styleUrls: ['./movie.component.scss']
 })
 export class MovieComponent implements OnInit {
-    public title: string = 'BOXOFFICE';
+    public title: string;
 
     public constructor(
         private route: ActivatedRoute,
-        private router: Router
+        private router: Router,
+        private movieService: MovieService
     ) {
     }
 
     public ngOnInit(): void {
-        this.checkURL();
-    }
-
-    private checkURL(): any {
-        const url = this.router.url;
-        const query:string = this.route.snapshot.paramMap.get('query');
+        this.movieService.setTitle.subscribe({
+            next: (value) => {
+                this.title = value;
+            }
+        });
     }
 }
