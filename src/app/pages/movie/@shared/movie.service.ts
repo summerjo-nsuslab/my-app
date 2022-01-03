@@ -31,24 +31,19 @@ export class MovieService {
         const arr: BoxOffice[] = [];
         const today: string = moment().add(-1, 'd').format('YYYYMMDD');
         const boxOfficeURL: string = `${this.kobisBaseURL}boxoffice/searchDailyBoxOfficeList.json?${this.kobisKey}&targetDt=${today}`;
-        try {
-            const getBoxOffice = await lastValueFrom(this.http.get<BoxOfficeDTO>(boxOfficeURL));
-            const dailyBoxOffice = getBoxOffice.boxOfficeResult.dailyBoxOfficeList;
+        const getBoxOffice = await lastValueFrom(this.http.get<BoxOfficeDTO>(boxOfficeURL));
+        const dailyBoxOffice = getBoxOffice.boxOfficeResult.dailyBoxOfficeList;
 
-            dailyBoxOffice.forEach(data => {
-                arr.push({
-                    rank: data.rank,
-                    rankInten: Number(data.rankInten),
-                    rankOldAndNew: data.rankOldAndNew,
-                    movieCd: data.movieCd,
-                    movieNm: data.movieNm
-                });
+        dailyBoxOffice.forEach(data => {
+            arr.push({
+                rank: data.rank,
+                rankInten: Number(data.rankInten),
+                rankOldAndNew: data.rankOldAndNew,
+                movieCd: data.movieCd,
+                movieNm: data.movieNm
             });
-            return arr;
-        } catch (err) {
-            console.error(err);
-            return arr;
-        }
+        });
+        return arr;
     }
 
     public async searchMovie(query: string, page: number): Promise<MovieInfo> {

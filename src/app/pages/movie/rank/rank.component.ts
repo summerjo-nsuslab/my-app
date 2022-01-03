@@ -25,7 +25,12 @@ export class RankComponent implements OnInit {
     }
 
     public async getBoxOffice() {
-        this.boxOfficeList = await this.movieService.getBoxOffice();
-        this.ChangeDetectorRef.markForCheck();
+        try {
+            this.boxOfficeList = await this.movieService.getBoxOffice();
+        } catch (err) {
+            console.error(err);
+        } finally {
+            this.ChangeDetectorRef.markForCheck();
+        }
     }
 }
