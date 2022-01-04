@@ -7,7 +7,6 @@ import * as moment from 'moment';
 import {
     BoxOffice,
     BoxOfficeDTO,
-    MovieInfo,
     SearchMovieDTO
 } from './interface';
 import { genreList } from './genres';
@@ -47,30 +46,12 @@ export class MovieService {
         return arr;
     }
 
-    public async searchMovie(query: string, page: number): Promise<MovieInfo> {
+    public async searchMovie(query: string, page: number): Promise<SearchMovieDTO> {
         const url: string = `${this.tmdbBaseURL}search/movie${this.tmdbKey}&query=${query}&language=ko&page=${page}`;
-        const searchResult = await lastValueFrom(this.http.get<SearchMovieDTO>(url));
-        const totalPage: number = searchResult.total_pages;
-        console.log(searchResult);
-        const arr: MovieInfo = { movie: [], pages: totalPage };
-
-        searchResult.results.forEach(data => {
-            arr.movie.push({
-                poster: data.poster_path,
-                adult: data.adult,
-                overview: data.overview ? data.overview : '미리보기 내용이 없습니다.',
-                release_date: moment(data.release_date).format('YYYY'),
-                genre: this.getGenres(data.genre_ids),
-                id: data.id,
-                title: data.title,
-                backdrop_path: data.backdrop_path,
-                vote: data.vote_average
-            });
-        });
-        return arr;
+        return lastValueFrom(this.http.get<SearchMovieDTO>(url));
     }
 
-    private getGenres(genreID: Array<number>): any {
+    public getGenres(genreID: Array<number>): any {
         const arr: Array<string> = [];
         genreID.forEach((id) => {
             const test = genreList.find(list => list.id === id).name;

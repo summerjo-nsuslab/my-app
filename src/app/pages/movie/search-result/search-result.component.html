@@ -1,6 +1,6 @@
-<ng-container *ngIf="searchResult?.movie.length > 0; else noResult">
+<ng-container *ngIf="searchResult?.length > 0; else noResult">
     <ul class="movieList clearFix">
-        <li *ngFor="let movie of searchResult.movie">
+        <li *ngFor="let movie of searchResult">
             <a href="javascript: void(0)">
                 <div class="poster">
                     <img src="https://image.tmdb.org/t/p/original/{{ movie.poster }}"

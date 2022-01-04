@@ -17,6 +17,11 @@ const routes: Routes = [
     {
         path: 'movie',
         loadChildren: () => import('./pages/movie/movie.module').then(m => m.MovieModule)
+    },
+    {
+        path: '',
+        redirectTo: '/main',
+        pathMatch: 'full'
     }
 ];
 

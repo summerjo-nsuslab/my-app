@@ -33,58 +33,6 @@ export interface BoxOfficeDTO {
     }
 }
 
-export interface boxOfficeDetailDTO {
-    movieInfoResult:{
-        movieInfo: {
-            movieCd: string,
-            movieNm: string,
-            movieNmEn: string,
-            movieNmOg: string,
-            showTm: string,
-            prdtYear: string,
-            openDt: string,
-            prdtStatNm: string,
-            typeNm: string,
-            nations: Array<{
-                nationNm: string
-            }>,
-            genres: Array<{
-                genreNm: string
-            }>,
-            directors: Array<{
-                peopleNm: string
-                peopleNmEn: string
-            }>,
-            actors: Array<{
-                peopleNm: string,
-                peopleNmEn: string,
-                cast: string,
-                castEn: string
-            }>,
-            showTypes: Array<{
-                showTypeGroupNm: string,
-                showTypeNm: string
-            }>,
-            companys: Array<{
-                companyCd: string,
-                companyNm: string,
-                companyNmEn: string,
-                companyPartNm: string
-            }>,
-            audits: Array<{
-                auditNo: string,
-                watchGradeNm: string
-            }>,
-            staffs: Array<{
-                peopleNm: string,
-                peopleNmEn: string,
-                staffRoleNm: string
-            }>
-        },
-        source: string
-    }
-}
-
 export interface SearchMovieDTO {
     page: number,
     results: Array<{
@@ -108,18 +56,12 @@ export interface SearchMovieDTO {
 }
 
 export interface MovieInfo {
-    movie: Array<{
-        poster: string,
-        adult: boolean,
-        overview: string,
-        release_date: string,
-        genre: Array<string>,
-        id: number,
-        title: string,
-        backdrop_path: string,
-        vote: number
-    }>,
-    pages: number
+    poster: string,
+    overview: string,
+    release_date: string,
+    genre: Array<string>,
+    title: string,
+    vote: number
 }
 
 export interface Genre {
