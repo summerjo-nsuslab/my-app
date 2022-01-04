@@ -19,9 +19,8 @@ export class RankComponent implements OnInit {
         this.Math = Math;
     }
 
-    public ngOnInit(): void {
-        this.getBoxOffice().then();
-        this.movieService.setTitle.next('BOXOFFICE');
+    public async ngOnInit(): Promise<void> {
+        await this.getBoxOffice();
     }
 
     public async getBoxOffice() {

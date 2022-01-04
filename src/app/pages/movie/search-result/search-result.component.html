@@ -1,4 +1,4 @@
-<ng-container *ngIf="searchResult.movie.length > 0; else noResult">
+<ng-container *ngIf="searchResult?.movie.length > 0; else noResult">
     <ul class="movieList clearFix">
         <li *ngFor="let movie of searchResult.movie">
             <a href="javascript: void(0)">

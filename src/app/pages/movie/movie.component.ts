@@ -18,10 +18,10 @@ export class MovieComponent implements OnInit {
     }
 
     public ngOnInit(): void {
-        this.movieService.setTitle.subscribe({
-            next: (value) => {
+        this.movieService.setTitle.subscribe(
+            (value) => {
                 this.title = value;
             }
-        });
+        );
     }
 }
