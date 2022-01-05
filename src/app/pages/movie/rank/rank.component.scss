@@ -1,9 +1,9 @@
+@import "/src/styles";
+
 :host {
     .boxOffice {
         max-width: 400px;
         margin: 0 auto;
-        //border-top: 1px solid #000;
-        //border-bottom: 1px solid #000;
 
         li {
             position: relative;
@@ -55,6 +55,20 @@
                     &:before {
                         content: '▼';
                     }
+                }
+            }
+        }
+    }
+}
+
+@include mobile480 {
+    :host {
+        .boxOffice {
+            li {
+                font-size: 1.1rem;
+                
+                .change {
+                    font-size: .9em;
                 }
             }
         }
