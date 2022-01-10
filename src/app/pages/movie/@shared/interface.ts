@@ -34,7 +34,8 @@ export interface BoxOffice {
     overview?: string,
     release_date?: string,
     genre?: Array<string>,
-    vote?: number
+    vote?: number,
+    active: boolean
 }
 
 export interface SearchMovieDTO {

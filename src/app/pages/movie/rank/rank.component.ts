@@ -36,7 +36,8 @@ export class RankComponent implements OnInit {
                     rank: data.rank,
                     rankInten: Math.abs(Number(data.rankInten)),
                     movieNm: data.movieNm,
-                    movieStatusType: this.checkStatus(data.rankOldAndNew, data.rankInten)
+                    movieStatusType: this.checkStatus(data.rankOldAndNew, data.rankInten),
+                    active: false
                 });
             });
 
@@ -87,5 +88,12 @@ export class RankComponent implements OnInit {
         }
 
         return 'normal';
+    }
+
+    public onClick(item: BoxOffice) {
+        this.boxOfficeList.filter(i => i !== item && i.active).forEach((i) => {
+            i.active = false;
+        });
+        item.active = !item.active;
     }
 }

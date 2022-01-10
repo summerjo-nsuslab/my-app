@@ -1,5 +1,5 @@
 <ul class="boxOffice">
-    <li *ngFor="let movie of boxOfficeList">
+    <li *ngFor="let movie of boxOfficeList" (click)="onClick(movie)" [class.active]="movie.active">
         <button type="button">
             <span class="num">{{ movie.rank }}</span>
             <span class="movieName">{{ movie.movieNm }}</span>
