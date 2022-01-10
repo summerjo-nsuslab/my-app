@@ -15,8 +15,13 @@ const routes: Routes = [
         loadChildren: () => import('./pages/weather/weather.module').then(m => m.WeatherModule)
     },
     {
-        path: '**',
-        redirectTo: 'main'
+        path: 'movie',
+        loadChildren: () => import('./pages/movie/movie.module').then(m => m.MovieModule)
+    },
+    {
+        path: '',
+        redirectTo: '/main',
+        pathMatch: 'full'
     }
 ];
 

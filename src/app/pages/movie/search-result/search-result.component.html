@@ -1,0 +1,47 @@
+<ng-container *ngIf="searchResult?.length > 0; else noResult">
+    <ul class="movieList clearFix">
+        <li *ngFor="let movie of searchResult">
+            <a href="javascript: void(0)">
+                <div class="poster">
+                    <img src="https://image.tmdb.org/t/p/original/{{ movie.poster }}"
+                         onError="javascript:this.src='assets/noImg.png'" alt="">
+                    <div class="overview">
+                        <p class="summary">{{ movie.overview }}</p>
+                        <p class="rate">관람평 <span>{{ movie.vote }}</span></p>
+                    </div>
+                </div>
+                <div class="movieInfo clearFix">
+                    <p class="title">{{ movie.title }}</p>
+                    <p class="genres"><span *ngFor="let genre of movie.genre">#{{ genre }} </span></p>
+                    <span class="releaseDate">{{ movie.release_date }}</span>
+                </div>
+            </a>
+        </li>
+    </ul>
+</ng-container>
+<ng-template #noResult>
+    <p class="resultText">검색 결과가 없습니다.</p>
+</ng-template>
+<div class="pagination" *ngIf="pages.length > 1">
+    <ul>
+        <ng-container *ngIf="activePage !== 1;">
+            <li>
+                <a routerLink="../1">&lt;&lt;</a>
+            </li>
+            <li>
+                <a routerLink="../{{ activePage - 1 }}">&lt;</a>
+            </li>
+        </ng-container>
+        <li *ngFor="let num of pages" [class.active]="num === activePage">
+            <a routerLink="../{{ num }}">{{ num }}</a>
+        </li>
+        <ng-container *ngIf="activePage !== totalPage;">
+            <li>
+                <a routerLink="../{{ activePage + 1 }}">&gt;</a>
+            </li>
+            <li>
+                <a routerLink="../{{ totalPage }}">&gt;&gt;</a>
+            </li>
+        </ng-container>
+    </ul>
+</div>

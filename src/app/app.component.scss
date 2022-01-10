@@ -1,9 +1,5 @@
 :host {
     display: block;
-    //max-width: 800px;
-    //padding: 3em 4em;
-    //margin: 1em auto;
-    //background-color: #ececec;
 
     header {
         border-bottom: 1px solid #000;
@@ -12,8 +8,10 @@
             margin: 0 auto;
             ul {
                 display: flex;
+                overflow: auto;
                 li {
                     a {
+                        white-space: nowrap;
                         padding: 1.5em 1em;
 
                         &.active {
