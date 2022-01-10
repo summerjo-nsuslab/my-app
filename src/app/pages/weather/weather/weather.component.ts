@@ -40,9 +40,10 @@ export class WeatherComponent implements OnInit {
     }
 
     public async delete(city: Weather, $event: MouseEvent): Promise<void> {
+        $event.stopPropagation();
+        $event.preventDefault();
         await this.weatherService.deleteCity(city.id);
         this.cities = this.cities.filter(c => c !== city);
-        $event.preventDefault();
     }
 
     public async onSubmit(city: string): Promise<void> {
