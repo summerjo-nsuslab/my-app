@@ -45,11 +45,11 @@ export class RankComponent implements OnInit {
                 return this.getDetail(m.movieNm);
             });
 
-            await Promise.all(promises).then((result) => {
-                for (let i = 0; i < boxOfficeList.length; i++) {
-                    this.boxOfficeList.push({ ...boxOfficeList[i], ...result[i] });
-                }
-            });
+            const promiseArr = await Promise.all(promises);
+
+            for (let i = 0; i < boxOfficeList.length; i++) {
+                this.boxOfficeList.push({ ...boxOfficeList[i], ...promiseArr[i] });
+            }
         } catch (err) {
             console.error(err);
         } finally {
