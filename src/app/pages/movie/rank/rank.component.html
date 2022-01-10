@@ -1,17 +1,28 @@
 <ul class="boxOffice">
     <li *ngFor="let movie of boxOfficeList">
-        <span class="num">{{ movie.rank }}</span>
-        <span class="movieName">{{ movie.movieNm }}</span>
-        <ng-container *ngIf="movie.rankOldAndNew === 'NEW'; else isOld">
-            <span class="change new">NEW!</span>
-        </ng-container>
-        <ng-template #isOld>
-            <ng-container *ngIf="movie.rankInten === 0 ; else hasInten">
-                <span class="change">-</span>
+        <button type="button">
+            <span class="num">{{ movie.rank }}</span>
+            <span class="movieName">{{ movie.movieNm }}</span>
+            <ng-container [ngSwitch]="movie.movieStatusType">
+                <span *ngSwitchCase="'normal'" class="change">-</span>
+                <span *ngSwitchCase="'new'" class="change new">NEW!</span>
+                <span *ngSwitchCase="'up'" class="change up">{{ movie.rankInten }}</span>
+                <span *ngSwitchCase="'down'" class="change down">{{ movie.rankInten }}</span>
             </ng-container>
-            <ng-template #hasInten>
-                <span class="change" [ngClass]="movie.rankInten > 0 ? 'up' : 'down'">{{ Math.abs(movie.rankInten) }}</span>
-            </ng-template>
-        </ng-template>
+        </button>
+        <div class="movieInfo">
+            <div class="content">
+                <div>
+                    <div class="poster">
+                        <img src="https://image.tmdb.org/t/p/original/{{ movie.poster }}"
+                             onError="javascript:this.src='assets/noImg.png'" alt="">
+                    </div>
+                    <div class="overview">
+                        <p class="summary">{{ movie.overview }}</p>
+                        <p class="rate">관람평 <span>{{ movie.vote }}</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </li>
 </ul>

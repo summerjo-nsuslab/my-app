@@ -1,11 +1,3 @@
-export interface BoxOffice {
-    rank: string,
-    rankInten: number,
-    rankOldAndNew: string,
-    movieCd: string,
-    movieNm: string
-}
-
 export interface BoxOfficeDTO {
     boxOfficeResult: {
         boxofficeType: string,
@@ -31,6 +23,18 @@ export interface BoxOfficeDTO {
             showCnt: string
         }>
     }
+}
+
+export interface BoxOffice {
+    rank: string,
+    rankInten: number,
+    movieNm: string,
+    movieStatusType: string,
+    poster?: string,
+    overview?: string,
+    release_date?: string,
+    genre?: Array<string>,
+    vote?: number
 }
 
 export interface SearchMovieDTO {
@@ -60,7 +64,7 @@ export interface MovieInfo {
     overview: string,
     release_date: string,
     genre: Array<string>,
-    title: string,
+    title?: string,
     vote: number
 }
 

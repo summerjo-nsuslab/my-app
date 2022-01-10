@@ -38,7 +38,6 @@ export class SearchResultComponent implements OnInit {
             const result = await this.movieService.searchMovie(query, this.activePage);
 
             result.results.forEach((data: any) => {
-                console.log(data);
                 this.searchResult.push({
                     poster: data.poster_path,
                     overview: data.overview ? data.overview : '미리보기 내용이 없습니다.',
@@ -49,7 +48,7 @@ export class SearchResultComponent implements OnInit {
                 });
             });
             this.totalPage = result.total_pages;
-            this.setPagination().then();
+            this.setPagination();
         } catch (err) {
             console.error(err);
         } finally {
@@ -58,7 +57,7 @@ export class SearchResultComponent implements OnInit {
         }
     }
 
-    private async setPagination() {
+    private setPagination() {
         const arr: number[] = [];
         const totalPage: number = this.totalPage;
         const pageCount: number = 10;
