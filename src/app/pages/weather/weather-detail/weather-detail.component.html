@@ -1,0 +1,29 @@
+<div class="inner" *ngIf="weatherInfo">
+    <button class="btnBack" (click)="goBack()">< 뒤로가기</button>
+    <div class="currentWeather card weatherIcon" [ngClass]="weatherInfo.weather">
+        <p class="city">{{ weatherInfo.city }}</p>
+        <p class="temp">{{ weatherInfo.temp }}°C</p>
+        <p>최저: {{ weatherInfo.minTemp }}°C</p>
+        <p>최고: {{ weatherInfo.maxTemp }}°C</p>
+    </div>
+    <div class="dailyWeather card">
+<!--        <p class="font-middle">Hourly</p>-->
+        <ul>
+            <li *ngFor="let hourly of weatherInfo.hourly">
+                <p>{{ hourly.time }}시</p>
+                <p>{{ hourly.temp }}°C</p>
+                <div [ngClass]="hourly.weather"></div>
+            </li>
+        </ul>
+    </div>
+    <div class="dailyWeather card">
+<!--        <p class="font-middle">Daily</p>-->
+        <ul>
+            <li *ngFor="let daily of weatherInfo.daily">
+                <p>{{ daily.day }}</p>
+                <p>{{ daily.temp }}°C</p>
+                <div [ngClass]="daily.weather"></div>
+            </li>
+        </ul>
+    </div>
+</div>

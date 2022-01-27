@@ -19,6 +19,12 @@
     "@angular/platform-browser": "~13.0.0",
     "@angular/platform-browser-dynamic": "~13.0.0",
     "@angular/router": "~13.0.0",
+    "@types/axios": "^0.14.0",
+    "angular-in-memory-web-api": "^0.13.0",
+    "axios": "^0.24.0",
+    "moment": "^2.29.1",
+    "moment-timezone": "^0.5.34",
+    "request": "^2.88.2",
     "rxjs": "~7.4.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

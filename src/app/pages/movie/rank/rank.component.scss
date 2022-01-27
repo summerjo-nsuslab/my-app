@@ -1,0 +1,150 @@
+@import "/src/styles";
+
+:host {
+    .boxOffice {
+        max-width: 600px;
+        margin: 0 auto;
+
+        li {
+            position: relative;
+            line-height: 1.2;
+            word-break: keep-all;
+            overflow: hidden;
+
+            & + li {
+                margin-top: .5em;
+            }
+
+            &.active {
+                background-color: #fff;
+                .movieInfo {
+                    padding-top: 61%;
+                    background-color: #fff;
+                }
+            }
+
+            button {
+                display: block;
+                position: relative;
+                width: 100%;
+                height: auto;
+                text-align: left;
+                padding: 1em 2.5em 1em 1em;
+                border: 1px solid #000;
+                border-bottom: none;
+            }
+
+            .movieInfo {
+                position: relative;
+                border: 1px solid #000;
+                border-top: none;
+                padding-top: .01%;
+                transition: .5s padding-top;
+
+                .content {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    padding: 2% 5% 5%;
+
+                    & > div {
+                        position: relative;
+                    }
+                }
+
+                .poster {
+                    width: 40%;
+                }
+
+                .overview {
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    width: 55%;
+                    height: 100%;
+                    font-size: .9rem;
+                    line-height: 1.3;
+
+                    .summary {
+                        height: calc(100% - 4rem);
+                        overflow: auto;
+                    }
+
+                    .rate {
+                        position: absolute;
+                        bottom: 0;
+                        left: 0;
+                        display: flex;
+                        align-items: center;
+                        width: 100%;
+                        height: 3rem;
+                        font-size: .8rem;
+                        border-top: 1px solid #aaa;
+
+                        span {
+                            color: #3c87ff;
+                            font-size: 2rem;
+                            margin-left: .25em;
+                        }
+                    }
+                }
+            }
+
+            .num {
+                display: inline-block;
+                width: 25px;
+                text-align: center;
+            }
+            .movieName {
+                margin-left: .5em;
+            }
+
+            .change {
+                position: absolute;
+                top: 50%;
+                right: 1.5em;
+                width: 30px;
+                color: #666;
+                font-size: .75em;
+                text-align: center;
+                transform: translateY(-50%);
+                content: '-';
+
+                &.new {
+                    color: #c50000;
+                    content: 'NEW!';
+                }
+
+                &.up {
+                    color: #c50000;
+
+                    &:before {
+                        content: '▲';
+                    }
+                }
+
+                &.down {
+                    color: #3c87ff;
+
+                    &:before {
+                        content: '▼';
+                    }
+                }
+            }
+        }
+    }
+}
+
+@include mobile480 {
+    :host {
+        .boxOffice {
+            li {
+                font-size: 1.1rem;
+
+                .change {
+                    font-size: .9em;
+                }
+            }
+        }
+    }
+}

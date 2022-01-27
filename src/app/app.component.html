@@ -1,1 +1,19 @@
+<header *ngIf="router.url !== '/main'">
+    <nav>
+        <ul>
+            <li>
+                <a routerLink="/main" routerLinkActive="active">MAIN</a>
+            </li>
+            <li>
+                <a routerLink="/todo" routerLinkActive="active">TO DO LIST</a>
+            </li>
+            <li>
+                <a routerLink="/weather" routerLinkActive="active">WEATHER FORECAST</a>
+            </li>
+            <li>
+                <a routerLink="/movie" routerLinkActive="active">MOVIE</a>
+            </li>
+        </ul>
+    </nav>
+</header>
 <router-outlet></router-outlet>

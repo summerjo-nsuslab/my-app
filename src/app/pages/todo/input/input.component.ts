@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { ItemService } from '../@shared/item.service';
-import { TodoInputStateService } from '../todo-list/todo-input-state.service';
+import { TodoInputStateService } from '../@shared/todo-input-state.service';
 
 @Component({
     selector: 'app-input',
